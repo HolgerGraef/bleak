@@ -96,11 +96,13 @@ class BleakGATTServiceCollection(object):
         Should not be used by end user, but rather by `bleak` itself.
         """
         if service.uuid not in self.__services:
+            print("Adding service:", service.uuid)
             self.__services[service.uuid] = service
         else:
-            raise BleakError(
-                "This service is already present in this BleakGATTServiceCollection!"
-            )
+            print("Duplicate service not added:", service.uuid)
+#            raise BleakError(
+#                "This service is already present in this BleakGATTServiceCollection!"
+#            )
 
     def get_service(self, _uuid: Union[str, UUID]) -> BleakGATTService:
         """Get a service by UUID string"""
@@ -112,14 +114,16 @@ class BleakGATTServiceCollection(object):
         Should not be used by end user, but rather by `bleak` itself.
         """
         if characteristic.uuid not in self.__characteristics:
+            print("Adding characteristic:", characteristic.uuid)
             self.__characteristics[characteristic.uuid] = characteristic
             self.__services[characteristic.service_uuid].add_characteristic(
                 characteristic
             )
         else:
-            raise BleakError(
-                "This characteristic is already present in this BleakGATTServiceCollection!"
-            )
+            print("Duplicate characteristic not added:", characteristic.uuid)
+#            raise BleakError(
+#                "This characteristic is already present in this BleakGATTServiceCollection!"
+#            )
 
     def get_characteristic(self, _uuid: Union[str, UUID]) -> BleakGATTCharacteristic:
         """Get a characteristic by UUID string"""
